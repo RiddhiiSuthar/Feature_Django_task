@@ -13,3 +13,20 @@ services:
      POSTGRES_USER: 'licenses'
      POSTGRES_PASSWORD: 'licenses'
      POSTGRES_DB: 'licenses'
+  web:
+    build:
+      context: ./license_portal
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./license_portal:/app
+    ports:
+      - 8080:8000
+    depends_on:
+      - postgres
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - 3000:3000
